@@ -1,0 +1,61 @@
+<div class="w-1/4 flex items-center">
+  <app-create-todo-view (itemCreated)="loadData()"></app-create-todo-view>
+  <!-- <ng-container *ngTemplateOutlet="createTodoWidget"></ng-container> -->
+  <button type="button" mat-raised-button class="ml-2" (click)="openDialog()">
+    <mat-icon>launch</mat-icon>
+  </button>
+</div>
+<mat-card class="flex items-center justify-center p-12" *ngIf="!loaded">
+  <mat-spinner diameter="40"></mat-spinner>
+  <span class="bold ml-2">Loading...</span>
+</mat-card>
+<mat-card class="flex flex-col items-center justify-center p-12 text-red-500" *ngIf="error">
+  <mat-icon>sentiment_very_dissatisfied</mat-icon>
+  <div class="mt-3">An error has occurred. Please refresh the page</div>
+</mat-card>
+<mat-card class="flex flex-col items-center justify-center p-12" *ngIf="loaded && !todos.length">
+  <mat-icon>code</mat-icon>
+  <div class="mt-3">No records</div>
+</mat-card>
+<table mat-table [dataSource]="todos" [trackBy]="trackTodos" class="mat-elevation-z8" *ngIf="loaded && todos.length">
+  <ng-container matColumnDef="text">
+    <th mat-header-cell *matHeaderCellDef> Text </th>
+    <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+  </ng-container>
+  <ng-container matColumnDef="created">
+    <th mat-header-cell *matHeaderCellDef> Created </th>
+    <td mat-cell *matCellDef="let element"> {{element.created | date : 'medium'}} </td>
+  </ng-container>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> 
+      <span class="cursor-pointer" [appTooltip]="tooltipTemplate">{{element.id}}</span> 
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button type="button" mat-icon-button (click)="removeItem(element.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<ng-template #createTodoWidget let-layout let-config="layout">
+  <!-- {{config}} {{layout}} -->
+  <app-create-todo-view [layout]="config" (itemCreated)="updateList()"></app-create-todo-view>
+</ng-template>
+<ng-template #createItemDialog>
+  <div mat-dialog-title class="flex justify-end">
+    <button type="button" mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngTemplateOutlet="createTodoWidget;context:dialogConfig"></ng-container>
+  <!-- <ng-container [ngTemplateOutlet]="createTodoWidget" [ngTemplateOutletContext]="{$implicit: 'vertical', layout: 'vertical'}"></ng-container> -->
+</ng-template>
+<ng-template #tooltipTemplate>
+  Test
+</ng-template>

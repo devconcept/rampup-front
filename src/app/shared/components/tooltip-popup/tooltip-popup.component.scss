@@ -1,0 +1,30 @@
+.popup-wrapper {
+  position: relative;
+  padding: 1rem;
+  border: solid 1px lightgray;
+  border-radius: 3px;
+  background-color: white;
+  color: black;
+
+  &:before {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    border-bottom-color: gray;
+    left: 24px;
+    top: -10px;
+  }
+
+  &:after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    border-bottom-color: white;
+    left: 24px;
+    top: -10px;
+  }
+}

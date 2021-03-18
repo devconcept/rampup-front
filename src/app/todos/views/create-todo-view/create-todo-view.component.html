@@ -1,0 +1,13 @@
+<form class="flex items-center" [class]="{'flex-col': layout === 'vertical'}" [formGroup]="addItemForm" #form="ngForm">
+  <mat-form-field >
+    <mat-label>Test</mat-label>
+    <input type="text" matInput formControlName="text" cdkFocusInitial>
+    <mat-error *ngIf="addItemForm.controls.text.touched && addItemForm.controls.text.invalid">
+      The text for the item is required
+    </mat-error>
+  </mat-form-field>
+    <button type="submit" mat-raised-button color="primary" [class]="{'ml-auto': layout === 'vertical', 'ml-2': layout !== 'vertical'}"
+     (click)="addTodo()" [disabled]="addItemForm.invalid">
+      Add
+    </button>
+</form>
