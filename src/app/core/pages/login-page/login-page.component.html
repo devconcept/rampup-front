@@ -1,0 +1,30 @@
+<div class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" *ngIf="loginForm">
+  <mat-card class="w-96">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <h3>Login</h3>
+      <mat-form-field class="block">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username">
+        <mat-error *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.touched">
+          The username is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="block">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">
+          The password is required
+        </mat-error>
+      </mat-form-field>
+      <div class="my-3 text-red-500" [style.display]="loginError ? 'block' : 'none'">
+        Invalid username or password 
+      </div>
+      <div class="my-3 text-right">
+        <button type="submit" mat-raised-button color="primary">
+          Login
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+
